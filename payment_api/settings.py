@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
+
+
+DB_HOST = environ.get("POSTGRES_HOST", "172.19.0.1")
+DB_PORT = environ.get("POSTGRES_PORT", "5432")
+DB_NAME = environ.get("POSTGRES_DB", "postgres")
+DB_USER = environ.get("POSTGRES_USER", "postgres")
+DB_PASS = environ.get("POSTGRES_PASSWORD", "")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,8 +84,12 @@ WSGI_APPLICATION = 'payment_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
